@@ -1,0 +1,28 @@
+.header-box-top {
+    display: flex;
+}
+
+#wrapper{
+	max-width: 1200px;
+	margin: 0 auto;
+	
+}
+
+.logo>a>img{
+	border-radius: 13px;
+	height: 100px;
+    width: auto
+}
+
+.tmp{
+	display: flex;
+}
+
+.tmp1{
+	display: flex;
+	flex-direction: column;
+}
+
+a{
+	text-decoration: none;
+}
