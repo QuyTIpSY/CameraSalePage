@@ -26,6 +26,7 @@ public class chitietsanphambean {
 	private String congketnoi;
 	private String ketnoiocung;
 	private String kichthuoc;
+	private String chitietmaloai;
 	
 	public chitietsanphambean() {
 		super();
@@ -37,7 +38,7 @@ public class chitietsanphambean {
 			String loabaodong_phatloichao, String damthoai2chieu, String hotrothenho, String dieukhienxoay,
 			String sokenh_chuannenvideo, String playbackthongminh, String thietbihienthi, String chedoghivideo,
 			String chedoxemlaivideo, String socamxemlaicungluc, String congketnoi, String ketnoiocung,
-			String kichthuoc) {
+			String kichthuoc, String chitietmaloai) {
 		super();
 		this.machitietsanpham = machitietsanpham;
 		this.dophangiai_congnghenenvideo = dophangiai_congnghenenvideo;
@@ -64,6 +65,7 @@ public class chitietsanphambean {
 		this.congketnoi = congketnoi;
 		this.ketnoiocung = ketnoiocung;
 		this.kichthuoc = kichthuoc;
+		this.chitietmaloai = chitietmaloai;
 	}
 
 	public int getMachitietsanpham() {
@@ -265,6 +267,14 @@ public class chitietsanphambean {
 	public void setKichthuoc(String kichthuoc) {
 		this.kichthuoc = kichthuoc;
 	}
-	
+
+
+	public void setChitietmaloai(String chitietmaloai) {
+		this.chitietmaloai = chitietmaloai;
+	}
+
+	public String getChitietmaloai() {
+		return chitietmaloai;
+	}
 	
 }

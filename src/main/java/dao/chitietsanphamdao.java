@@ -45,10 +45,11 @@ public class chitietsanphamdao {
 				String congketnoi=rs.getString("socamxemlaicungluc");
 				String ketnoiocung=rs.getString("ketnoiocung");
 				String kichthuoc=rs.getString("kichthuoc");
+				String chitietmaloai=rs.getString("chitietmaloai");
 				ctsp=new chitietsanphambean(machitietsanpham, dophangiai_congnghenenvideo, ghiam, goismscanhbao, nhandienkhuonmat, 
 						phathienconnguoi, denhongngoai_ongkinh_nguon, ketnoidaughi_ketnoiuser, chatlieuvo_kichthuoc, masanpham, mota, 
 						ketnoiwifi, loabaodong_phatloichao, damthoai2chieu, hotrothenho, dieukhienxoay, sokenh_chuannenvideo, 
-						playbackthongminh, thietbihienthi, chedoghivideo, chedoxemlaivideo, socamxemlaicungluc, congketnoi, ketnoiocung, kichthuoc);
+						playbackthongminh, thietbihienthi, chedoghivideo, chedoxemlaivideo, socamxemlaicungluc, congketnoi, ketnoiocung, kichthuoc, chitietmaloai);
 			}
 			
 			kn.cn.close();
@@ -60,4 +61,9 @@ public class chitietsanphamdao {
 			e.printStackTrace(); return null;
 		}
 	}
+	
+//	public static void main(String[] args) {
+//		chitietsanphamdao ct=new chitietsanphamdao();
+//		System.out.println(ct.getchitietsp(1).getChatlieuvo_kichthuoc());
+//	}
 }

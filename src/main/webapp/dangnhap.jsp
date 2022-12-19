@@ -1,4 +1,3 @@
-<%@page import="bean.khachhangbean"%>
 <%@page import="bean.loaibean"%>
 <%@page import="java.awt.font.ImageGraphicAttribute"%>
 <%@page import="bean.sanphambean"%>
@@ -9,9 +8,6 @@
 <html>
 <head>
 <style >
-	a{
-		text-decoration: none !important;
-	}
 	.header-top{
 		display: flex; 
 		justify-content: space-between; 
@@ -38,7 +34,8 @@
 	}
 	
 	#sidebar{
-		width: 250px;
+		width: 200px;
+		margin-right: 10px;
 	}
 	
 	#content-top{
@@ -80,6 +77,19 @@
 	.box-content{
 		margin-top: 10px;
 	}
+	
+	#side-bar-login {
+		border: 5px solid #00BFFF;
+		text-align: left;
+		padding-left: 20px;
+		padding-right: 30px;
+		position: relative;
+		background: white;
+		line-height: 30px;
+		margin-bottom: 0px;
+	    margin-top: 0px;
+	    margin-left: 10px;
+	}
 
 </style>
 <meta charset="ISO-8859-1">
@@ -101,13 +111,14 @@
 				</div>
 			
 				<div class="search">
-					<form action="trangchuController" method="post" class="form-search">
+					<form action="#" method="post" class="form-search">
 						<div>
 							<input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm, mã sản phẩm,..." style="height: 40px; width: 350px;">
-							<input type="submit" value="Tìm kiếm" class="btn-search" style="height: 40px;">
+							<button type="button" class="btn-search" style="height: 40px;">Search</button>
 						</div>
 					</form>
 				</div>
+				
 				
 				<div style="display: flex;">
 					<div class="tmp" style="margin-right: 20px;">
@@ -145,18 +156,8 @@
 				      <li><a style="color: white; font-weight: bold" href="thanhtoanController">THANH TOÁN</a></li>
 				      <li><a style="color: white; font-weight: bold" href="lichsumuahangController">LỊCH SỬ MUA HÀNG</a></li>
 				    </ul>
-				    <ul class="nav navbar-nav navbar-right">
-				    	<%if(session.getAttribute("khachhang")!=null) {%>
-				    		<li><a style="color: white; font-weight: bold" href="dangxuatController"><span class="glyphicon glyphicon-log-in"></span> Đăng xuất</a></li>
-					      	<li><a href="trangchuController"><span style="font-weight: bold; color: white;" class="glyphicon glyphicon-user"></span><b style="color: white"> Xin chào, 
-					      	<%			      	
-						      	khachhangbean kh =(khachhangbean)session.getAttribute("khachhang");
-						      	out.print(kh.getHoten());
-					      	%></b></a></li>
-				      <%}else{ %>
-				      	<li><a style="color: white; font-weight: bold" href="dangnhapController"><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li>		 
-				      	<li><a style="color: white; font-weight: bold" href="dangkyController"><span class="glyphicon glyphicon-log-out"></span> Đăng ký</a></li>	 
-				      <%} %> 
+				    <ul class="nav navbar-nav navbar-right">	 
+				      	<li><a style="color: white; font-weight: bold" href="dangkyController"><span class="glyphicon glyphicon-log-out"></span> Đăng ký</a></li>	   
 				    </ul>
 				  </div>
 				</nav>
@@ -172,15 +173,35 @@
 							long ip=0, ipwifi=0, ipai=0, fullcolor=0, daughi=0;
 							for(loaibean ds: dsloai){%>
 								<img style="margin-right: 10px;" src="<%=ds.getanh() %>">
-								<a href="httatcasanphamController?maloai=<%=ds.getMaloai()%>"><%=ds.getTenloai() %></a><hr>
+								<a href="#"><%=ds.getTenloai() %></a><hr>
 							<%} %>
 						</tr>
 					</table>					
 				</div>	
 				
 				<div>
-					<a href="httatcasanphamController?maloai=cameraipwifi"><img src="Images/banner.jpg"></a> 
+					<a href="httatcasanphamController?maloai=cameraipwifi"><img width="700px" src="Images/banner.jpg"></a> 
 				</div>
+				
+				<div id="side-bar-login">
+					<form action="ktdnController" method="post">
+						<div style="font-weight: 600; color: #1E90FF;display: flex;justify-content: center;margin-top: 20px;">ĐĂNG NHẬP</div>
+						<div class="bold">
+							<br>
+							<input class="input" type="text" placeholder="Tài khoản" name="taikhoan">
+						</div>
+						
+						<div class="bold">
+							<br>
+							<input class="input" type="password" placeholder="Mật khẩu" name="matkhau"> 
+						</div>
+						
+						<div style="display: flex;justify-content: center;margin-top: 20px;">
+							<input style="color: white;font-weight: bold;background: #337ab7;" class="input button" type="submit" value="Đăng nhập">
+						</div>			
+					</form>
+				</div>
+				
 			</div>
 			
 			<div id="content-mid">
@@ -191,7 +212,7 @@
 							CAMERA IP J-TECH
 						</div>
 						<div class="content-right">
-							<a href="httatcasanphamController?maloai=cameraip">Xem tất cả sản phẩm ➨</a>
+							<a href="#">Xem tất cả sản phẩm ➨</a>
 						</div>
 					</div>
 					
@@ -209,7 +230,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -221,9 +242,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>">
-													<div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div>
-												</a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -236,7 +255,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -249,7 +268,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -262,7 +281,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -281,7 +300,7 @@
 							CAMERA IP WIFI J-TECH
 						</div>
 						<div class="content-right">
-							<a href="httatcasanphamController?maloai=cameraipwifi">Xem tất cả sản phẩm ➨</a>
+							<a href="#">Xem tất cả sản phẩm ➨</a>
 						</div>
 					</div>
 					
@@ -297,7 +316,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -309,7 +328,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -322,7 +341,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -335,7 +354,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -348,7 +367,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -367,7 +386,7 @@
 							CAMERA IP AI J-TECH
 						</div>
 						<div class="content-right">
-							<a href="httatcasanphamController?maloai=cameraipai">Xem tất cả sản phẩm ➨</a>
+							<a href="#">Xem tất cả sản phẩm ➨</a>
 						</div>
 					</div>
 					
@@ -383,7 +402,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -395,7 +414,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -408,7 +427,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -421,7 +440,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -434,7 +453,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -453,7 +472,7 @@
 							CAMERA FULL COLOR J-TECH
 						</div>
 						<div class="content-right">
-							<a href="httatcasanphamController?maloai=camerafullcolor">Xem tất cả sản phẩm ➨</a>
+							<a href="#">Xem tất cả sản phẩm ➨</a>
 						</div>
 					</div>
 					
@@ -469,7 +488,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -481,7 +500,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -494,7 +513,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -507,7 +526,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -520,7 +539,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -540,7 +559,7 @@
 							ĐẦU GHI J-TECH
 						</div>
 						<div class="content-right">
-							<a href="httatcasanphamController?maloai=daughi">Xem tất cả sản phẩm ➨</a>
+							<a href="#">Xem tất cả sản phẩm ➨</a>
 						</div>
 					</div>
 					
@@ -556,7 +575,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE; height: 200px;">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -568,7 +587,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE; height: 200px;">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -581,7 +600,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE; height: 200px;">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -594,7 +613,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE; height: 200px;">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>
@@ -607,7 +626,7 @@
 										<div style="background-color: white; border: 1px solid #E7E7DE; height: 200px;">
 											<div>
 												<a href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><img width="200px" src="<%=sp.getAnh() %>"></a><br>	
-												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>&anh=<%=sp.getAnh()%>&tensp=<%=sp.getTensanpham()%>&gia=<%=sp.getGia()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
+												<a style="text-decoration: none;" href="chitietsanphamController?msp=<%=sp.getMasanpham()%>"><div style="width: 200px; padding-left: 5px"><%=sp.getTensanpham() %></div></a> <br>
 												<div style="width: 200px; padding-left: 5px; font-weight: bold; color: red;">Giá: <%=sp.getGia() %> VNĐ</div>
 											</div>
 										</div>

@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import bean.loaibean;
 import bean.sanphambean;
@@ -17,16 +16,16 @@ import bo.loaibo;
 import bo.sanphambo;
 
 /**
- * Servlet implementation class trangchuController
+ * Servlet implementation class httatcasanphamController
  */
-@WebServlet("/trangchuController")
-public class trangchuController extends HttpServlet {
+@WebServlet("/httatcasanphamController")
+public class httatcasanphamController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public trangchuController() {
+    public httatcasanphamController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,9 +33,11 @@ public class trangchuController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
+		
+		String maloai=request.getParameter("maloai");
 		
 		sanphambo spbo=new sanphambo();
 		ArrayList<sanphambean> dssanpham=spbo.getsanpham();
@@ -64,8 +65,10 @@ public class trangchuController extends HttpServlet {
 			System.out.println(sotien);
 		}
 		request.setAttribute("dssanpham", dssanpham);
+		request.setAttribute("maloai", maloai);
+		System.out.println(maloai);
 		
-		RequestDispatcher rd=request.getRequestDispatcher("htsanpham.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("httatcasanpham.jsp");
 		rd.forward(request, response);
 	}
 

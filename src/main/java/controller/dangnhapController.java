@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,24 +9,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import bean.chitietsanphambean;
+import bean.loaibean;
 import bean.sanphambean;
-import bo.chitietsanphambo;
+import bo.loaibo;
 import bo.sanphambo;
 
 /**
- * Servlet implementation class chitietsanphamController
+ * Servlet implementation class dangnhapController
  */
-@WebServlet("/chitietsanphamController")
-public class chitietsanphamController extends HttpServlet {
+@WebServlet("/dangnhapController")
+public class dangnhapController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public chitietsanphamController() {
+    public dangnhapController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,22 +34,16 @@ public class chitietsanphamController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int masp=Integer.parseInt(request.getParameter("msp"));
-		String anh=request.getParameter("anh");
-		String tensp=request.getParameter("tensp");
-		long gia=Long.parseLong(request.getParameter("gia"));
+		sanphambo spbo=new sanphambo();
 		
+		ArrayList<sanphambean> dssanpham=spbo.getsanpham();
+		request.setAttribute("dssanpham", dssanpham);
 		
-		chitietsanphambo ctspbo=new chitietsanphambo();
-		chitietsanphambean ctsp=ctspbo.ctsp(masp);
+		loaibo lbo=new loaibo();
+		ArrayList<loaibean> dsloai=lbo.getloai();
+		request.setAttribute("dsloai", dsloai);
 		
-		request.setAttribute("ctsp", ctsp);
-		request.setAttribute("anh", anh);
-		request.setAttribute("tensp", tensp);
-		request.setAttribute("gia", gia);
-		request.setAttribute("masp", masp);
-		
-		RequestDispatcher rd=request.getRequestDispatcher("chitietsanpham.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("dangnhap.jsp");
 		rd.forward(request, response);
 	}
 
